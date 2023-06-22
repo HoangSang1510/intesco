@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ims_api_mapping_view_form" model="ir.ui.view">
+        <field name="name">ims.api.mapping.view.form</field>
+        <field name="model">ims.api.mapping</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="4">
+                        <field name="name" />
+                        <field name="model_id" />
+                        <field name="service_usage" />
+                        <field name="active" invisible="1"/>
+                    </group>
+                    <group col="4" name='get' string="GET">
+                        <field name="allow_get" />
+                        <field name="required_params" />
+                    </group>
+                     <group col="4" name='post' string="POST">
+                        <field name="allow_post" />
+                    </group>
+                    <field name="mapping_field_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name" />
+                            <field name="source_field_id" domain="[('model_id', '=', parent.model_id)]"/>
+                            <field name="type" />
+                            <field name="required" />
+                            <field name="nullable" />
+                            <field name="empty" />
+                            <field name="coerce" />
+                            <field name="is_key" />
+                            <field name="related_mapping_id" optional="hide"
+                                    attrs="{'readonly': [('field_type', 'not in', ['many2one', 'one2many', 'many2many'])],
+                                            'required': [('type', 'in', ['dict', 'list'])]}"/>
+                            <field name="default_data" optional="hide"/>
+                            <field name="field_to_search" optional="hide"
+                                attrs="{'readonly': [('field_type', 'not in', ['many2one'])],
+                                        'required': [('field_type', 'in', ['many2one']),
+                                                     ('related_mapping_id', '=', False)]}"/>
+                            <field name="allow_create" optional="hide"
+                                attrs="{'readonly': [('field_type', 'not in', ['many2one'])]}"/>
+                            <field name="allow_get" optional="hide"/>
+                            <field name="allow_post" optional="hide"/>
+                            <field name="field_type" invisible="1"/>
+                        </tree>
+                        <form>
+                            <group col="4">
+                                <field name="name" />
+                                <field name="source_field_id" />
+                                <field name="type" />
+                                <field name="required" />
+                                <field name="nullable" />
+                                <field name="empty" />
+                                <field name="coerce" />
+                                <field name="is_key" />
+                                <field name="related_mapping_id" />
+                                <field name="default_data" />
+                                <field name="field_to_search"/>
+                                <field name="allow_create"/>
+                            </group>
+                            <group name="allow_method" string="Method" col="4">
+                                <field name="allow_get" />
+                                <field name="allow_post"/>
+                            </group>
+                        </form>
+                    </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="ims_api_mapping_view_tree" model="ir.ui.view">
+        <field name="name">ims.api.mapping.view.tree</field>
+        <field name="model">ims.api.mapping</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name" />
+                <field name="model_id" />
+                <field name="service_usage" />
+                <field name="allow_get" />
+                <field name="allow_post" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="ims_api_action" model="ir.actions.act_window">
+        <field name="name">IMS API</field>
+        <field name="res_model">ims.api.mapping</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

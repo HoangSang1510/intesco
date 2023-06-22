@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="ims_api_menu"
+        name="IMS API"
+        sequence="450"
+        web_icon="ims_api,static/description/icon_api.png"/>
+
+    <menuitem
+        id="api_mapping_menu"
+        name="Mapping"
+        action="ims_api_action"
+        parent="ims_api_menu"
+        sequence="10"/>
+
+    <record id="base_rest.menu_rest_api_docs" model="ir.ui.menu">
+        <field name="parent_id" ref="ims_api_menu" />
+    </record>
+</odoo>
