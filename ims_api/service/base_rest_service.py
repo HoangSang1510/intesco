@@ -165,9 +165,10 @@ class BaseRestService(AbstractComponent):
             elif _field.source_field_id.ttype == 'one2many':
                 result_o2m = []
                 for o2m_rec in value_record:
-                    result_o2m += self._to_json_data(
-                        o2m_rec, _field.related_mapping_id)
+                    result_o2m.append(self._to_json_data(
+                        o2m_rec, _field.related_mapping_id))
                 result.update({_field.name: result_o2m})
+
             # TODO:
             elif _field.source_field_id.ttype in ['integer', 'float']:
                 result.update({_field.name: value_record or 0})
@@ -178,6 +179,8 @@ class BaseRestService(AbstractComponent):
                 datetime_value = value_record and\
                     value_record.strftime(DTF) or ''
                 result.update({_field.name: datetime_value})
+            elif _field.source_field_id.ttype == 'boolean':
+                result.update({_field.name: value_record or False})
             else:
                 result.update({_field.name: value_record or ''})
         return result
